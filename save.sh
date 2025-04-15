@@ -10,10 +10,11 @@ db.js \
 hostNames.txt \
 hostView.js \
 ingestor.js \
-INSTALL.txt \
+NOTES.txt \
 lostDetect.js \
 package.json \
-README.txt \
+README.md \
+LICENSE \
 save.sh \
 startPing.sh \
 views \
