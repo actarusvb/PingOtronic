@@ -1,0 +1,52 @@
+<%- include('header.html') -%>
+<%- include('headerTitle.html') -%>
+<% let rowNumber=1; %>
+<% let browNumber=1; %>
+<div><span><a href="/hosts">Manage Host File</a></span> || <span><a href="/about.html">About</a></span></div>
+<span id="1-container" class="one"  style="width:60%">
+<h3>All Hosts</h3>
+<table id="firstLast" class="hTable display compact">
+<tr><td>First Record</td><td><%= dataSpan.min %></td></tr>
+<tr><td>Last Record</td><td><%= dataSpan.max %></td></tr>
+</table>
+</span>
+<span id="2-container" class="two" style="width:100%">
+<table id="hostsTable" class="hTable display compact" style="width:100%">
+ <thead>
+	<tr><th>#</th><th>Host IP</th><th>1H</th><th>4H</th><th>24H</th></tr>
+ </thead>
+ <tbody>
+  <% hosts.forEach(function(host){ %>
+    <tr>
+		<td><%= rowNumber++ %></td>
+		<td><%= host.hostip.trim() %></td>
+		<td><a href="/chart/<%= host.hostip.trim() %>/60"   target="<%= host.hostip.trim() %>">last hour</a></td>
+		<td><a href="/chart/<%= host.hostip.trim() %>/240"  target="<%= host.hostip.trim() %>">last 4 hours</a>
+		<td><a href="/chart/<%= host.hostip.trim() %>/1440" target="<%= host.hostip.trim() %>">last 24 hours</a></td>
+	</tr> 
+  <% }) %>
+ </tbody>
+</table>
+</span>
+<span id="3-container" class="three" style="width:100%">
+<h3>Bad Hosts</h3>
+<table id="badHostsTable" class="hTable display compact" style="width:100%">
+ <thead>
+	<tr><th>#</th><th>Host IP</th><th>1H</th><th>4H</th><th>24H</th></tr>
+ </thead>
+ <tbody>
+  <% badHosts.forEach(function(bhost){ %>
+    <tr>
+		<td><%= browNumber++ %></td>
+		<td><%= bhost.hostip.trim() %></td>
+		<td><a href="/chart/<%= bhost.hostip.trim() %>/60"   target="<%= bhost.hostip.trim() %>">last hour</a></td>
+		<td><a href="/chart/<%= bhost.hostip.trim() %>/240"  target="<%= bhost.hostip.trim() %>">last 4 hours</a>
+		<td><a href="/chart/<%= bhost.hostip.trim() %>/1440" target="<%= bhost.hostip.trim() %>">last 24 hours</a></td>
+	</tr> 
+  <% }) %>
+ </tbody>
+</table>
+</span>
+
+</span>
+<%- include('footer.html') -%>

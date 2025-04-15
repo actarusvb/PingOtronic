@@ -1,0 +1,31 @@
+
+#closeThis {
+	cursor: crosshair;
+	display: inline-block;
+}
+#hostip{
+	display: inline-block;
+}
+div.dt-container {
+    /* margin: 0 auto; */
+    width: 60%;
+}
+
+.hide {
+	display: none;
+}
+
+.dt-container {
+	margin: unset;
+}
+
+.one,
+.two,
+.three{
+  display: inline-block;
+}
+
+#cfg{
+    width: 780px;
+    height: 500px;
+}

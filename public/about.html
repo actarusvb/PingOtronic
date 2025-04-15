@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+    
+</head>
+<body>
+<h1>PingOtronic</h1>
+<a href="/">Home</a>
+<h3>What is PingOtronic</h3>
+<p>This is a ping monitoring tools for debug network issue in complex network.</p>
+<p>Targets will be pinged (icmp echo request & icmp echo response) using PingOtronc host's (linux debian machine) (no satellite & console yet) ping for packet size defined for each Host.</p>
+<ul>
+<li>Pings will be at 1 second cadence.</li>
+<li>Ping response are stored in local postgresql database.</li>
+<li>1 minute is like to 60 pings, 1 hour 3600 and 1 day 86400 ping for each host.</li>
+<li>200 target mean about 15 Milion of records each day.</li>
+<li>200 target mean lot of traffic from your host to destination target, this may be a performance problem on low bandwith links</li>
+</ul>
+<h3>Why this name</h3>
+<p>This is a tribute to the mid '70 console game. It was called Ping-o-tronic (https://it.wikipedia.org/wiki/Ping-o-tronic & https://en.wikipedia.org/wiki/Ping-O-Tronic).</p>
+<p>There is nothing more than a tribute to that console, it was a game and pingOtronic is a network tools.</p>
+<h3>How To</h3>
+<p>After installation you may connect using a moderm web browser to address and port where applicaion is attached. Selecting "Manage HostFile" you can add/remove targets</p>
+<p>Host file is read every 5 minutes on the clock</p>
+<h3>Tobe Done</h3>
+<p>Data Retention.... how long you want to keep your data in DB?</p>
+<p>No page auth is set, it can be done, but it is not done. Plese ask for it if required!<p>
+<p>At this moment PingOtronic do not clean & remove old records from DB, this will lead to problem and slow down web pages</p>
+<p>Please fell free to consider max data retention removing data form DB tables and/or moving in separate tables</p>
+<h3>Support</h3>
+<p>Professional services for installation, turn-on key solution, authertication, add-on etc are available. Please contact us for discuss about this!.</p>
+<h3>How is Done</h3>
+<p>node+node-express+postgresql+mosquitto+bash script+crontab</p>
+<ul>
+<li>In a dedicate linux box (we use Debian)</li>
+<li>cron execute every 5 minute a bash script</li>
+<li>bash script kill al pings active and start new ones</li>
+<li>Every ping pipe output to a mosquitto topic</li>
+<li>one javascript script listen to mosquitto topic and save data</li>
+<li>an other javascript script listen to mosquitto topics and rise error/save a record in case of ping is not replayed</li>
+<li>a set of web pages running under Node/express give access to data</li>
+</ul>
+</body>

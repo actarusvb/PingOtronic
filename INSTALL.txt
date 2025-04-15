@@ -1,0 +1,99 @@
+#
+#
+###
+su -  
+useradd ingestor
+usermod -aG sudo ingestor
+getent group sudo
+
+// log as ingestor
+
+
+
+
+su -
+apt update && sudo apt upgrade
+apt install sudo
+exit
+
+sudo apt update && sudo apt upgrade
+sudo apt install mosquitto mosquitto-clients
+sudo apt install openssh-server postgresql
+sudo apt install -y adduser libfontconfig1 musl
+sudo apt install curl tcpdump sudo killall
+
+
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+\. "$HOME/.nvm/nvm.sh"
+nvm install 22
+sudo npm install pm2 -g
+npm -g install pm2
+
+pm2 startup
+
+mkdir ingestor
+cd ingestor/
+
+<< copy packages.json,conf.json,db.js,hostname,etc....
+
+npm init
+
+#as superusers
+
+create DB & DB user & tables
+CREATE DATABASE pingotronic;
+CREATE ROLE mqtt WITH PASSWORD 'mqttPass';
+ALTER ROLE mqtt WITH  LOGIN;
+GRANT UPDATE ON pingotronic TO mqtt;
+
+#exit & reconnect ad mqtt;
+psql pingotronic --u mqtt --password -h localhost
+
+\c pingotronic 
+
+CREATE TABLE public.events (
+    times timestamp without time zone,
+    size integer,
+    hostip character(24),
+    seq integer,
+    ttl integer,
+    rtt real
+);
+CREATE INDEX idx_events_hostip ON public.events USING btree (hostip);
+CREATE INDEX timesidx ON public.events USING btree (times);
+ALTER TABLE public.events OWNER TO mqtt;
+
+CREATE TABLE public.badevents (
+    times timestamp without time zone,
+    size integer,
+    hostip character(24),
+    seq integer,
+    ttl integer,
+    rtt real
+);
+
+CREATE INDEX idx_events_hostip ON public.badevents USING btree (hostip);
+CREATE INDEX timesidx ON public.badevents USING btree (times);
+ALTER TABLE public.badevents OWNER TO mqtt;
+
+
+
+<< copy all distr files
+
+crontab -u ingestor -e 
+*/5 * * * * /home/ingestor//ingestor/startPing.sh
+
+check
+
+# no no 
+# GRAFANA
+#
+sudo apt-get install -y apt-transport-https software-properties-common wget
+https://grafana.com/docs/grafana/latest/setup-grafana/start-restart-grafana/
+
+
+#
+# hostView
+#
+npm install express

@@ -1,0 +1,27 @@
+<%- include('header-chart.html') -%>
+<a href="/">Home</a> || <div id="hostip"><%= hostip %></div> || <div id="closeThis">X Close</div>
+ 
+<div>
+	<label for="start-time">from:</label>
+	<input
+	  type="datetime-local"
+	  id="start-time"
+	  name="start-time"
+	  min="2025-03-07T00:00"
+	  />
+	<label for="stop-time">to:</label>
+	<input
+	  type="datetime-local"
+	  id="stop-time"
+	  name="stop-time"
+	  min="2025-03-07T00:00"
+	  />
+	<button id="goBtn" name="goBtn" value="Go">Go!</button>
+</div>
+<div id="duration" class="hide"><%= duration %></div>
+<div id="info" class="centerView">Waiting for data...</div>
+<div>
+	<canvas id="myChart" height="120"></canvas>
+</div>
+
+<%- include('footer.html') -%>

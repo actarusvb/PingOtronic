@@ -1,0 +1,11 @@
+{
+	"mqttUrl": "mqtt://127.0.0.1"
+	,"topic": "pingOtronic/ping"
+	,"mqttOptions": {}
+	,"pingTimeout" : 3000
+	,"timeMarker": 5000
+	,"ttlOut": 9999
+	,"rttOut": 9999
+	,"hostViewPort": 3001
+	,"hostFnName": "/home/ingestor/ingestor/hostNames.txt"
+}
