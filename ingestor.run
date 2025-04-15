@@ -1,0 +1,3 @@
+# this file may be empty.
+# if it exist startPing.sh will start all pings.
+Otherwise it just exist (after killall ping)
