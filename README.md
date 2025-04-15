@@ -45,9 +45,13 @@ Professional services for installation, turn-on key solution, authertication, ad
 node+node-express+postgresql+mosquitto+bash script+crontab
 
 In a dedicate linux box (we use Debian)
-cron execute every 5 minute a bash script
-bash script kill al pings active and start new ones
-Every ping pipe output to a mosquitto topic
-one javascript script listen to mosquitto topic and save data
-an other javascript script listen to mosquitto topics and rise error/save a record in case of ping is not replayed
+cron execute every 5 minute a bash script.
+
+Bash script kill al pings active and start new ones, 
+Every ping pipe output to a mosquitto topic.
+
+One javascript script listen to mosquitto topic and save data
+
+An other javascript script listen to mosquitto topics and rise error/save a record in case of ping is not replayed
+
 a set of web pages running under Node/express give access to data
