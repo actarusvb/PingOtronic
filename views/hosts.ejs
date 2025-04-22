@@ -1,10 +1,8 @@
-<%- include('header.html') -%>
-<%- include('headerTitle.html') -%>
+<%- include('header.ejs') -%>
+<%- include('headerTitle.ejs') -%>
 <% let rowNumber=1; %>
 <% let browNumber=1; %>
-<div><span><a href="/hosts">Manage Host File</a></span> || <span><a href="/about.html">About</a></span></div>
 <span id="1-container" class="one"  style="width:60%">
-<h3>All Hosts</h3>
 <table id="firstLast" class="hTable display compact">
 <tr><td>First Record</td><td><%= dataSpan.min %></td></tr>
 <tr><td>Last Record</td><td><%= dataSpan.max %></td></tr>
@@ -49,4 +47,4 @@
 </span>
 
 </span>
-<%- include('footer.html') -%>
+<%- include('footer.ejs') -%>

@@ -25,6 +25,23 @@ div.dt-container {
   display: inline-block;
 }
 
+.processBtn{
+}
+div.processStatus{
+	float:left;
+	height: 15px;
+	width:  40px;
+	border-style: solid;
+	background-color: powderblue;
+}
+div.backGroudRed{
+	background-color: red;
+}
+div.backGroudGreen{
+	background-color: springgreen;
+}
+
+
 #cfg{
     width: 780px;
     height: 500px;

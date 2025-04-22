@@ -1,0 +1,10 @@
+<%- include('header.ejs') -%>
+<%- include('headerTitle.ejs') -%>
+
+<h3>SetUp</h3>
+<div id="processStatus" class="processStatus"></div>
+<button id="processStart" name="processStart" class="processBtn" value="run">Run</button>
+<button id="processStop" name="processStop" class="processBtn" value="stop">Stop</button>
+<div><textarea id="cfg" class="hostsArea"><%= hostfile %></textarea></div>
+<button id="saveBtn" name="saveBtn" value="Save">Save!</button>
+<%- include('footer.ejs') -%>
