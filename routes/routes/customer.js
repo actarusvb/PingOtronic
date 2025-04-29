@@ -6,12 +6,12 @@ const Customer = require("../models/Customer");
 const mongoose = require("mongoose");
 const express = require('express');
 const app = express.Router();
-// const session = require('express-session');
-
+const cookieOptions={ httpOnly: true ,signed: true,};
 const conf = require('../../conf.json');
+
 const {authenticateSession} = require("../controllers/authenticateSession");
 
-app.get('/list',authenticateSession, async (req, res) => {
+app.get('/list',authenticateSession('isAdmin'), async (req, res) => {
   const messages =  req.flash("info");
   const locals = {
     title: "NodeJs",
@@ -49,7 +49,7 @@ app.get('/about', (req, res) => {
     console.log(error);
   }
 });
-app.get('/add',authenticateSession,  (req, res) => {
+app.get('/add',authenticateSession('isAdmin'),  (req, res) => {
   const locals = {
     title: "Add New Customer - NodeJs",
     description: "Free NodeJs User Management System",
@@ -57,7 +57,7 @@ app.get('/add',authenticateSession,  (req, res) => {
 
   res.render("customer/add", locals);
 });
-app.post('/add',authenticateSession, async (req, res) => {
+app.post('/add',authenticateSession('isAdmin'), async (req, res) => {
   console.log(req.body);
 
   const newCustomer = new Customer({
@@ -78,7 +78,7 @@ app.post('/add',authenticateSession, async (req, res) => {
     console.log(error);
   }
 });
-app.get('/view/:id',authenticateSession, async (req, res) => {
+app.get('/view/:id',authenticateSession('isAdmin'), async (req, res) => {
   try {
     const customer =  await Customer.findOne({ _id: req.params.id });
 
@@ -95,7 +95,7 @@ app.get('/view/:id',authenticateSession, async (req, res) => {
     console.log(error);
   }
 });
-app.get('/edit/:id',authenticateSession, async (req, res) => {
+app.get('/edit/:id',authenticateSession('isAdmin'), async (req, res) => {
   try {
     const customer =  await Customer.findOne({ _id: req.params.id });
 
@@ -112,7 +112,7 @@ app.get('/edit/:id',authenticateSession, async (req, res) => {
     console.log(error);
   }
 });
-app.put('/edit/:id',authenticateSession, async (req, res) => {
+app.put('/edit/:id',authenticateSession('isAdmin'), async (req, res) => {
   try {
 	  console.log("editPost %s %s %s",req.body.email,req.body.enabled,req.body.firstName);
     await Customer.findByIdAndUpdate(req.params.id, {
@@ -134,7 +134,7 @@ app.put('/edit/:id',authenticateSession, async (req, res) => {
     console.log(error);
   }
 });
-app.delete('/edit/:id',authenticateSession, async (req, res) => {
+app.delete('/edit/:id',authenticateSession('isAdmin'), async (req, res) => {
   try {
     await Customer.deleteOne({ _id: req.params.id });
     res.redirect("/adminUser");
@@ -142,7 +142,7 @@ app.delete('/edit/:id',authenticateSession, async (req, res) => {
     console.log(error);
   }
 });
-app.post('/search',authenticateSession,async (req, res) => {
+app.post('/search',authenticateSession('isAdmin'),async (req, res) => {
   const locals = {
     title: "Search Customer Data",
     description: "Free NodeJs User Management System",
@@ -179,7 +179,9 @@ app.post('/login', async (req, res) => {
 
 			console.log("POST /login OK in req aft save %s",customer.email);
 				res.status(301)
-					.cookie('username', customer.email, { httpOnly: true })
+					.cookie('username', customer.email,cookieOptions)
+					.cookie('isAdmin', customer.isAdmin, cookieOptions)
+					.cookie('manageHosts', customer.manageHosts,cookieOptions )
 					.redirect("/")
 		} else {
 			console.log("POST /login KO %s",userName);
@@ -189,5 +191,11 @@ app.post('/login', async (req, res) => {
 		console.log(error);
 	}
 });
-
+app.get('/logout', async (req, res) => {
+	res.status(301)
+		.clearCookie('username')
+		.clearCookie('isAdmin')
+		.clearCookie('manageHosts')
+		.redirect("/")
+});
 module.exports = app;

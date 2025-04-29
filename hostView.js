@@ -8,8 +8,9 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const fs = require('node:fs');
 var path = require('node:path');
-var morgan = require('morgan')
-var cookieParser = require('cookie-parser')
+var morgan = require('morgan');
+var cookieParser = require('cookie-parser');
+const cookieEncrypter = require('cookie-encrypter');
 
 
 const conf = require('./conf.json');
@@ -22,7 +23,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(morgan('combined'))
-app.use(cookieParser())
+app.use(cookieParser(conf.cookieSecretKey));
+app.use(cookieEncrypter(conf.cookieSecretKey));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
@@ -45,10 +47,17 @@ const { pool } = require("./db");
 const {authenticateSession} = require("./routes/controllers/authenticateSession");
 app.use('/adminUser', require('./routes/routes/customer'));
 app.use('/login', require('./routes/routes/customer'));
-app.get('/hello', (req, res) => {
+app.get('/about', async function(req, res){
+	console.log("about pingOtronic requested");
+	res.render('pingOtronicAbout',{
+		title: "pingOtronic",
+		header: "Hosts"
+	});
+});
+app.get('/hello', async (req, res) => {
   res.send('Hello World!')
 })
-app.get('/chart/:hostip/:start/:stop',authenticateSession, async function(req, res) {
+app.get('/chart/:hostip/:start/:stop',authenticateSession("read"), async function(req, res) {
 	console.log("record for",req.params.hostip,req.params.start,req.params.stop);
 	let query={
 		text: "SELECT times,rtt from events  where hostip = $1 and times AT TIME ZONE 'UTC' > $2 and times AT TIME ZONE 'UTC' < $3 order by times asc",
@@ -69,7 +78,7 @@ app.get('/chart/:hostip/:start/:stop',authenticateSession, async function(req, r
 	}
 	res.send(respo);
 });
-app.get('/chart/:hostip/:duration',authenticateSession, function(req, res) {
+app.get('/chart/:hostip/:duration',authenticateSession("read"), function(req, res) {
 	console.log("base chart for host requested",req.params.hostip,req.params.duration);
 	res.render('chart', {
 		title: "hostView "+req.params.hostip
@@ -78,7 +87,7 @@ app.get('/chart/:hostip/:duration',authenticateSession, function(req, res) {
 		,hostip: req.params.hostip
 	});
 })
-app.get('/chart/:hostip',authenticateSession, function(req, res) {
+app.get('/chart/:hostip',authenticateSession("read"), function(req, res) {
 	console.log("base chart for host requested",req.params.hostip);
 	res.render('chart', {
 		title: "hostView "+req.params.hostip
@@ -87,7 +96,7 @@ app.get('/chart/:hostip',authenticateSession, function(req, res) {
 		,hostip: req.params.hostip
 	});
 });
-app.post('/hostsWrite',authenticateSession, async function(req, res){
+app.post('/hostsWrite',authenticateSession('manageHosts'), async function(req, res){
 	console.log("hosts cfg write list requested");
 	fs.writeFile(conf.hostFnName, req.body.fileCnt, err => {
 		if (err) {
@@ -99,7 +108,7 @@ app.post('/hostsWrite',authenticateSession, async function(req, res){
 		}
 	});
 });
-app.get('/processCtrlStatus',authenticateSession, function(req,res){
+app.get('/processCtrlStatus',authenticateSession('read'), function(req,res){
 	console.log("get processCtrlStatus");
 	fs.access(conf.procesCtrlFnName, fs.constants.F_OK, (err) => {
 		console.log(`${err ? 'does not exist' : 'exists'}`);
@@ -110,7 +119,7 @@ app.get('/processCtrlStatus',authenticateSession, function(req,res){
 		}
 	});
 });
-app.get('/processCtrl/:newMode',authenticateSession, function(req,res){
+app.get('/processCtrl/:newMode',authenticateSession('manageHosts'), function(req,res){
 	console.log("processCtrl %s",req.params.newMode);
 	if(req.params.newMode === "run"){
 		fdata=new Date().toString();
@@ -134,7 +143,7 @@ app.get('/processCtrl/:newMode',authenticateSession, function(req,res){
 		res.send({result: "error 02"});
 	}
 });
-app.get('/hosts',authenticateSession, async function(req, res){
+app.get('/hosts',authenticateSession('manageHosts'), async function(req, res){
 	console.log("hosts cfg read list requested");
 	fs.readFile(conf.hostFnName, 'utf8', (err, data) => {
 		if (err) {
@@ -154,18 +163,7 @@ app.get('/hosts',authenticateSession, async function(req, res){
 		}
 	});
 });
-app.get('/about',authenticateSession, async function(req, res){
-	console.log("about pingOtronic requested");
-	res.render('pingOtronicAbout',{
-		title: "pingOtronic",
-		header: "Hosts"
-	});
-});
-app.get('/protected',authenticateSession, (req, res) => {
-  const user = users.find(u => u.id === req.session.userId);
-  res.send(`Hello ${user.username}, you have accessed a protected route!`);
-});
-app.get('/',authenticateSession, async function(req, res){
+app.get('/',authenticateSession("read"), async function(req, res){
 	console.log("hosts list requested");
 	const dataSpan = await pool.query("select min(times) as min,max(times) as max from events")
 	const hosts = await pool.query('SELECT distinct hostip from events where times > now() - interval \''+conf.HostListDeep+'\' ')
@@ -180,6 +178,11 @@ app.get('/',authenticateSession, async function(req, res){
 		header: "Hosts"
 	});
 });
+app.get('/protected',authenticateSession('manageHosts'), (req, res) => {
+  const user = users.find(u => u.id === req.session.userId);
+  res.send(`Hello ${user.username}, you have accessed a protected route!`);
+});
+
 
 app.listen(conf.hostViewPort, () => {
   console.log(`hostView app listening on port ${conf.hostViewPort}`)

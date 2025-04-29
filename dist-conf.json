@@ -13,4 +13,6 @@
 	,"HostListDeep": "48 hour"
 	,"BadHostListDeep": "24 hour"
 	,"SessionSecretKey": "mySessionSecretKey"
+		,"cookieSecretKey": "32_bytes_long_string_for_AES_256"
+
 }
