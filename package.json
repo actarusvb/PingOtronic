@@ -11,6 +11,7 @@
   "dependencies": {
     "body-parser": "^2.2.0",
     "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
@@ -18,6 +19,7 @@
     "express-session": "^1.18.1",
     "method-override": "^3.0.0",
     "mongoose": "^8.13.2",
+    "morgan": "^1.10.0",
     "mqtt": "^5.10.4",
     "pg": "^8.14.1"
   }

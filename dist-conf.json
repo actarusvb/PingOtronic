@@ -1,7 +1,7 @@
 {
 	"mqttUrl": "mqtt://127.0.0.1"
 	,"topic": "pingOtronic/ping"
-	,"mongodbUri": "mongodb://myUserAdmin:88Cipolle!@10.0.2.2:27017/Customer?authMechanism=DEFAULT&authSource=admin"
+	,"mongodbUri": "mongodb://myMongoUser:myMongoPassword!@myMongoDb:27017/Customer?authMechanism=DEFAULT&authSource=admin"
 	,"mqttOptions": {}
 	,"pingTimeout" : 3000
 	,"timeMarker": 5000
@@ -12,5 +12,5 @@
 	,"procesCtrlFnName": "/home/ingestor/ingestor/ingestor.run"
 	,"HostListDeep": "48 hour"
 	,"BadHostListDeep": "24 hour"
-	,"SessionSecretKey": "<skjfhsl<zchxo89u8u32nm,a7661887"
+	,"SessionSecretKey": "mySessionSecretKey"
 }

@@ -1,5 +1,8 @@
 const Customer = require("../models/Customer");
 const mongoose = require("mongoose");
+const bcrypt = require('bcryptjs');
+
+
 
 exports.homepage = async (req, res) => {
   const messages = await req.flash("info");
@@ -84,6 +87,25 @@ exports.view = async (req, res) => {
     console.log(error);
   }
 };
+exports.loginCustomer = async (req, res) => {
+	try {
+		const { userName, password } = req.body;
+		console.log("POST /login %s %s",userName, password );
+		const customer = await Customer.findOne({ email: userName });
+		console.log("POST /login  %o",customer);
+		if (customer && password === customer.password && customer.enabled === true) {
+			console.log("POST /login OK %s",userName);
+			res.session.userId = customer.id;
+			res.redirect(301,"/");
+		} else {
+			console.log("POST /login KO %s",userName);
+			res.redirect(301,"/login");
+		}  
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 exports.edit = async (req, res) => {
   try {
     const customer = await Customer.findOne({ _id: req.params.id });
@@ -103,6 +125,7 @@ exports.edit = async (req, res) => {
 };
 exports.editPost = async (req, res) => {
   try {
+	  console.log("editPost %s %s %s",req.body.email,req.body.enabled,req.body.firstName);
     await Customer.findByIdAndUpdate(req.params.id, {
       enabled: req.body.enabled ? true : false,
 	  firstName: req.body.firstName,

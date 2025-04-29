@@ -1,3 +1,10 @@
+# project Specific config file
+db.js
+conf.json
+
+# local notes
+NOTES.txt
+
 # Logs
 logs
 *.log
@@ -66,8 +73,9 @@ web_modules/
 # Optional REPL history
 .node_repl_history
 
-# Output of 'npm pack'
+# Output of 'npm pack' & local archive
 *.tgz
+.tar.gz
 
 # Yarn Integrity file
 .yarn-integrity
@@ -129,5 +137,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# local notes
-NOTES.txt
+

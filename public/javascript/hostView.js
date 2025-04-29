@@ -1,4 +1,7 @@
-
+//
+// *hostView scripts
+//
+const url="/processCtrlStatus";
 
 $( document ).ready(function() {
 	let host = new DataTable('#hostsTable',{
@@ -13,7 +16,7 @@ $( document ).ready(function() {
 			[20, 60, 90, 'All']
 		]
 	});
-	const url="/processCtrlStatus";
+
 	$.ajax({
 	  method: "GET",
 	  url: url,
@@ -44,7 +47,6 @@ $( document ).ready(function() {
 			alert( "error" );
 		});
 	});
-	
 	$("#processStop").on("click",function(){
 		console.log("request process stop");
 		const url="/processCtrl/";
@@ -60,7 +62,6 @@ $( document ).ready(function() {
 			alert( "error" );
 		});
 	});
-	
 	$("#saveBtn").on("click",function(){
 		console.log("Save File",$("#cfg").val());
 		const url="/hostsWrite";
