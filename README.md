@@ -1,4 +1,4 @@
-# ingestor
+# PingOtronic
 A ping Ingestor 
 
 # PingOtronic
