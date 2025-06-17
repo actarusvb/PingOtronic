@@ -1,4 +1,4 @@
-# ingestor
+# PingOtronic
 A ping Ingestor 
 
 # PingOtronic
@@ -27,12 +27,12 @@ We use "Ingestor" as name.
 ## How To
 After installation you may connect using a moderm web browser to address and port where applicaion is attached. Selecting "Manage HostFile" you can add/remove targets
 
-Host file is read every 5 minutes on the clock
+Host file is read every 5 minutes on the clock.
+
+You have to manully add a super user into your mongodb dedicate collection for users. then when logged suing syper user account you maty create new users with different role.
 
 ## Tobe Done
 Data Retention.... how long you want to keep your data in DB?
-
-No page auth is set, it can be done, but it is not done. Plese ask for it if required!
 
 At this moment PingOtronic do not clean & remove old records from DB, this will lead to problem and slow down web pages
 
@@ -43,8 +43,10 @@ Professional services for installation, turn-on key solution, authertication, ad
 
 ## How is Done
 node+node-express+postgresql+mosquitto+bash script+crontab
+Users are stored into a mondodb collection.
 
 In a dedicate linux box (we use Debian)
+
 cron execute every 5 minute a bash script.
 
 Bash script kill al pings active and start new ones, 
