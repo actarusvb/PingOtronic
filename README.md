@@ -8,16 +8,21 @@ This is a ping monitoring tools for debug network issue in complex network.
 Targets will be pinged (icmp echo request & icmp echo response) using PingOtronc host's (linux debian machine) (no satellite & console yet) ping for packet size defined for each Host.
 
 Pings will be at 1 second cadence.
+Ping response ar piped into a mqtt topic.
+Messages in mqtt topic (ping response) are collected by a dedicate js script and stored in local postgresql database.
+Messages in mqtt topic (ping respnse) are listened and rgisteered in memory, if new ping response fail to be received from targeet a "fake rsponsee messagee with ttl of 10 seconds is put in mqtt topic.  
 
-Ping response are stored in local postgresql database.
+Please note!
 
 1 minute is like to 60 pings, 1 hour 3600 and 1 day 86400 ping for each host.
 
-200 target mean about 15 Milion of records each day.
+200 target mean about 15 Milion of records each day, your disk/database will soon be saturated.
 
 200 target also mean lot of traffic from your host to destination target
 
-All of These may be/lead performance problem on low bandwith links
+What about 2000 target ?
+
+All of These may be/lead performance problem on low bandwith links or slow picgOTronic host. 
 
 ##  Why this name
 This is a tribute to the mid '70 console game. It was called Ping-o-tronic (https://it.wikipedia.org/wiki/Ping-o-tronic & https://en.wikipedia.org/wiki/Ping-O-Tronic).
