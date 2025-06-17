@@ -41,9 +41,11 @@ npm init
 
 #as superusers
 
+# you need postgresql running 
+
 create DB & DB user & tables
 CREATE DATABASE pingotronic;
-CREATE ROLE mqtt WITH PASSWORD 'mqttPass';
+CREATE ROLE mqtt WITH PASSWORD 'localPassword';
 ALTER ROLE mqtt WITH  LOGIN;
 GRANT UPDATE ON pingotronic TO mqtt;
 
@@ -84,16 +86,12 @@ ALTER TABLE public.badevents OWNER TO mqtt;
 crontab -u ingestor -e 
 */5 * * * * /home/ingestor//ingestor/startPing.sh
 
-check
-
-# no no 
-# GRAFANA
-#
-sudo apt-get install -y apt-transport-https software-properties-common wget
-https://grafana.com/docs/grafana/latest/setup-grafana/start-restart-grafana/
-
+check all 
 
 #
 # hostView
 #
 npm install express
+rename dist-db.js to db.js
+rename dist-conf.json to conf.json
+personalize with your local enviromeht

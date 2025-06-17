@@ -16,7 +16,7 @@
 127.0.0.1 -s=1350 -c=locale -n=host_locale
 8.8.8.8 -s=1400 -d=Google
 #
- #192.168.199.1 -d=LocalGw -c=Gw_london
+#192.168.199.1 -d=LocalGw -c=Gw_london
 # 
 192.168.188.1 -d=LocalGw -c=Gw_Novara
 
