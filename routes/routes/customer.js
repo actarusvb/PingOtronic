@@ -12,7 +12,7 @@ const conf = require('../../conf.json');
 const {authenticateSession} = require("../controllers/authenticateSession");
 
 app.get('/list',authenticateSession('isAdmin'), async (req, res) => {
-  const messages =  req.flash("info");
+  const messages =  [];
   const locals = {
     title: "NodeJs",
     description: "Free NodeJs User Management System",

@@ -1,52 +1,45 @@
 
 require('dotenv').config();
-const express = require('express');
-var bodyParser = require('body-parser')
-const expressLayout = require('express-ejs-layouts');
-const methodOverride = require('method-override');
-const flash = require('connect-flash');
-const session = require('express-session');
 const fs = require('node:fs');
 var path = require('node:path');
-var morgan = require('morgan');
-var cookieParser = require('cookie-parser');
-const cookieEncrypter = require('cookie-encrypter');
-
+const express = require('express');
+const bodyParser = require('body-parser')
+const expressLayout = require('express-ejs-layouts');
+const methodOverride = require('method-override');
+const session = require('express-session');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const mongoose = require("mongoose");
 
 const conf = require('./conf.json');
 const Customer = require("./routes/models/Customer");
-const mongoose = require("mongoose");
-
 const connectDB = require('./routes/config/db');
+const { pool } = require("./db");
 
-const app = express();
 const port = process.env.PORT || 5000;
+const app = express();
+
+const {authenticateSession} = require("./routes/controllers/authenticateSession");
+
+connectDB(conf.mongodbUri);
 
 app.use(morgan('combined'))
 app.use(cookieParser(conf.cookieSecretKey));
-app.use(cookieEncrypter(conf.cookieSecretKey));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-}));
+app.use( bodyParser.json() );
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({secret: conf.SessionSecretKey,resave: false,saveUninitialized: true,cookie: {maxAge: 1000 * 60 * 60 * 24 * 1,secure: true}}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('layout', './layouts/main');
 app.use(express.static(__dirname+'/public/'));
 app.set('view engine', 'ejs');
-app.use(flash({ sessionKeyName: 'flashMessage' }));
 app.use(expressLayout);
 
-connectDB(conf.mongodbUri);
-const { pool } = require("./db");
-
-
-const {authenticateSession} = require("./routes/controllers/authenticateSession");
 app.use('/adminUser', require('./routes/routes/customer'));
 app.use('/login', require('./routes/routes/customer'));
+
 app.get('/about', async function(req, res){
 	console.log("about pingOtronic requested");
 	res.render('pingOtronicAbout',{
@@ -182,8 +175,6 @@ app.get('/protected',authenticateSession('manageHosts'), (req, res) => {
   const user = users.find(u => u.id === req.session.userId);
   res.send(`Hello ${user.username}, you have accessed a protected route!`);
 });
-
-
 app.listen(conf.hostViewPort, () => {
   console.log(`hostView app listening on port ${conf.hostViewPort}`)
 });

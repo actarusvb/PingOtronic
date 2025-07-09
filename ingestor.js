@@ -39,6 +39,7 @@ mqttClient.on('message',function(topic, message, packet){
 
 
 async function insertData(dbBlock) {
+	// console.log("insertData %o %s",dbBlock,parseInt(dbBlock.times));
 	console.log(parseInt(dbBlock.times));
 	const res = await pool.query(
 		"INSERT INTO events (times,size,hostip,seq,ttl,rtt) VALUES (TO_TIMESTAMP($1) AT TIME ZONE 'UTC', $2, $3, $4, $5, $6)",
