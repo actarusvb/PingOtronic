@@ -1,6 +1,8 @@
 
-$( document ).ready(function() {
+
 	var chart;
+$( document ).ready(function() {
+	var maxy=undefined;
 	const elapsed=$("#duration").text();
 	const d = new Date();
 	const y=d.getFullYear().toString().padStart(4, '0');
@@ -42,6 +44,7 @@ $( document ).ready(function() {
 					borderColor:  "rgba(75,122,192,1)",
 					borderCapStyle: 'butt',
 					borderDash: [],
+					clip: true,
 					borderDashOffset: 0.0,
 					borderJoinStyle: 'miter',
 					pointBorderColor: "rgba(75,192,192,1)",
@@ -54,6 +57,9 @@ $( document ).ready(function() {
 				scales: {
 					x: {
 						type: 'time',
+					},
+					y: {
+						max: maxy
 					}
 				}
 			}
@@ -66,16 +72,34 @@ $( document ).ready(function() {
 			
 			chart.data.labels = dati.label;
 			chart.data.datasets[0].data = dati.data;
+			if($("#maxy").is(":checked")){
+				chart.options.scales.y.max=$("#maxyv").val() ? $("#maxyv").val() : 500;
+			}else{	
+				// chart.options.scales.y.max= Math.ceil( Math.max(...dati.data)/100)*100+100;
+				chart.options.scales.y.max=undefined;
+			}
 			chart.update();
 		})
 		.fail(function() {
 			alert( "error" );
 		});
 	}
+	$("#maxy").on("change",function(){
+		if($("#maxy").is(":checked")){
+			// chart.options.scales['y'].max=500;
+			chart.options.scales.y.max=$("#maxyv").val() ? $("#maxyv").val() : 500;
+		}else{
+			chart.options.scales['y'].max=undefined;
+		}
+		chart.update();
+		// go();
+		// chart.update();
+	});
 	$("#goBtn").on("click",function(){
 		chart.destroy();
 		go();
 	});
+	
 	$("#closeThis").on("click",function(){
 		window.close();
 	});
