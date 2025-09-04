@@ -18,9 +18,9 @@
     <tr>
 		<td><%= rowNumber++ %></td>
 		<td><%= host.hostip.trim() %></td>
-		<td><a href="/chart/<%= host.hostip.trim() %>/60"   target="<%= host.hostip.trim() %>">last hour</a></td>
-		<td><a href="/chart/<%= host.hostip.trim() %>/240"  target="<%= host.hostip.trim() %>">last 4 hours</a>
-		<td><a href="/chart/<%= host.hostip.trim() %>/1440" target="<%= host.hostip.trim() %>">last 24 hours</a></td>
+		<td><a href="/chart/<%= host.hostip.trim() %>/60" >Last Hour></a> <a href="/chart/<%= host.hostip.trim() %>/60" target="<%= host.hostip.trim() %>"><i class="bi bi-box-arrow-in-up-right"></i></a></td>
+		<td><a href="/chart/<%= host.hostip.trim() %>/240" >last 4 hours</a> <a href="/chart/<%= host.hostip.trim() %>/240" target="<%= host.hostip.trim() %>"><i class="bi bi-box-arrow-in-up-right"></i></a></td>
+		<td><a href="/chart/<%= host.hostip.trim() %>/1440" >last 24 hours</a> <a href="/chart/<%= host.hostip.trim() %>/1440" target="<%= host.hostip.trim() %>"><i class="bi bi-box-arrow-in-up-right"></i></a></td>
 	</tr> 
   <% }) %>
  </tbody>
@@ -38,7 +38,7 @@
 		<td><%= browNumber++ %></td>
 		<td><%= bhost.hostip.trim() %></td>
 		<td><a href="/chart/<%= bhost.hostip.trim() %>/60"   target="<%= bhost.hostip.trim() %>">last hour</a></td>
-		<td><a href="/chart/<%= bhost.hostip.trim() %>/240"  target="<%= bhost.hostip.trim() %>">last 4 hours</a>
+		<td><a href="/chart/<%= bhost.hostip.trim() %>/240"  target="<%= bhost.hostip.trim() %>">last 4 hours</a></td>
 		<td><a href="/chart/<%= bhost.hostip.trim() %>/1440" target="<%= bhost.hostip.trim() %>">last 24 hours</a></td>
 	</tr> 
   <% }) %>

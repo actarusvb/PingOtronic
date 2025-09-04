@@ -1,4 +1,10 @@
 
+
+
+
+
+
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h1 class="h2">About PingOtronic</h1>
 </div>
@@ -20,21 +26,21 @@
 <p>Hosts list is read every 5 minutes on the clock</p>
 <h3>Tobe Done</h3>
 <p>Data Retention.... how long you want to keep your data in DB?</p>
-<p>No page auth is set, it can be done, but it is not done. Plese ask for it if required!<p>
 <p>At this moment PingOtronic do not clean & remove old records from DB, this will lead to problem and slow down web pages</p>
-<p>Please fell free to consider max data retention removing data form DB tables and/or moving in separate tables</p>
+<p>Please fell free to consider max data retention attaching a script called by cron to remove data from DB tables or moving in separate tables/DB</p>
 <h3>Support</h3>
 <p>Professional services for installation, turn-on key solution, authertication, add-on etc are available. Please contact us for discuss about this!.</p>
 <h3>How is Done</h3>
 <p>node+node-express+postgresql+mosquitto+bash script+crontab</p>
 <ul>
 <li>In a dedicate linux box (we use Debian)</li>
-<li>cron execute every 5 minute a bash script</li>
-<li>bash script kill al pings active and start new ones</li>
+<li>cron execute every 5 minute a bash script to start ping processes</li>
+<li>bash script also kill all running pings active before start new ones</li>
 <li>Every ping pipe output to a mosquitto topic</li>
-<li>one javascript script listen to mosquitto topic and save data</li>
-<li>an other javascript script listen to mosquitto topics and rise error/save a record in case of ping is not replayed</li>
-<li>a set of web pages running under Node/express give access to data</li>
-<li>Users management pages and general layout was derived from <a href="https://raddy.dev/">Raddy TheBrand</a></li>
-
+<li>A javascript script listen to mosquitto topic and save data</li>
+<li>An other javascript script also listen to mosquitto topics and rise error/save a record in case of ping is not replayed</li>
+<li>A set of web pages running under Node/express give access to data</li>
+<li>Users management pages and general layout was derived from <a href="https://raddy.dev/">Raddy TheBrand</a>, I thanks him!</li>
 </ul>
+<h3>Who Do it</h3>
+<p>Stefano Bianchi do it. This is the new version resulting of multiple versio, stared at beging (early '90) using bash script, then multiple Perl versions, and now, in 2025, using mutch modern JS, SQL & Mongo.</p>
