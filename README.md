@@ -7,7 +7,7 @@ This is a ping monitoring tools for debug network issue in complex network.
 
 Targets will be pinged (icmp echo request & icmp echo response) using PingOtronc host's (linux debian machine) (no satellite & console yet) ping for packet size defined for each Host.
 
-Pings will be at 1 second cadence.
+Pings will be at 1 second cadence (due linux platform standard ping).
 
 Ping response are stored in local postgresql database.
 
@@ -29,14 +29,16 @@ After installation you may connect using a moderm web browser to address and por
 
 Host file is read every 5 minutes on the clock.
 
-You have to manully add a super user into your mongodb dedicate collection for users. then when logged suing syper user account you maty create new users with different role.
+You have to manualy add a super user into your mongodb dedicate collection for users. then when logged suing syper user account you maty create new users with different role.
+
+User are stored in MongoDB, ping data in postgres, yes we can use only one DBMS instead of two, but Mongo is more flexible for users' records, and ping data is realy standard in record format.
 
 ## Tobe Done
 Data Retention.... how long you want to keep your data in DB?
 
 At this moment PingOtronic do not clean & remove old records from DB, this will lead to problem and slow down web pages
 
-Please fell free to consider max data retention removing data form DB tables and/or moving in separate tables
+Please fell free to consider max data retention removing data form DB tables and/or moving in separate tables using a dedicate script attached to cron.
 
 ## Support
 Professional services for installation, turn-on key solution, authertication, add-on etc are available. Please contact us for discuss about this!.
@@ -56,4 +58,8 @@ One javascript script listen to mosquitto topic and save data
 
 An other javascript script listen to mosquitto topics and rise error/save a record in case of ping is not replayed
 
-a set of web pages running under Node/express give access to data
+a set of web pages/scripts running under Node/express give access to data
+
+## >Who Did it
+Stefano Bianchi (aka we 8;) ) did it. This is the new version as result of multiple previus version, started at beging (early '90) using bash script, 
+then multiple Perl versions, and now, in 2025, using mutch modern JS, SQL & Mongo.
