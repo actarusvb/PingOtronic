@@ -9,7 +9,7 @@
   "author": "Stefano.Bianchi@iskranet.net",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^2.2.0",
+    "body-parser": "~>2.2.1",
 	"on-headers": ">=1.1.0",
     "brace-expansion": "^4.0.1",
     "cookie-parser": "^1.4.7",

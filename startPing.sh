@@ -5,7 +5,14 @@ echo $RUNDIR
 export TZ=UTC
 killall -q ping
 
+
 echo "RESTART!" | mosquitto_pub -l -t pingOtronic/ping
+
+touch $RUNDIR/hostsPing.txt
+rm $RUNDIR/hostsPing.txt
+touch $RUNDIR/hostsPing.txt
+chmod +r $RUNDIR/hostsPing.txt
+echo "RENEW hostsPing.txt!" | mosquitto_pub -l -t pingOtronic/ping
 
 if  [[ -f $RUNDIR/ingestor.run ]];
 then
@@ -34,6 +41,7 @@ then
 				esac
 			done
 			echo "START ping" $size $ipAddr | mosquitto_pub -l -t pingOtronic/ping
+			echo $ipAddr $name >> $RUNDIR/hostsPing.txt
 			ping -D  -s $size $ipAddr | mosquitto_pub -l -t pingOtronic/ping &
 		fi
 	done

@@ -184,8 +184,8 @@ app.post('/login', async (req, res) => {
 					.cookie('manageHosts', customer.manageHosts,cookieOptions )
 					.redirect("/")
 		} else {
-			console.log("POST /login KO %s",userName);
-			res.redirect(301,"/login");
+			console.log("POST /login KO U %s P %s SP %s",userName,password,customer.password);
+			res.redirect(301,"/");
 		}  
 	} catch (error) {
 		console.log(error);

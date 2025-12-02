@@ -4,11 +4,28 @@
 const url="/processCtrlStatus";
 
 $( document ).ready(function() {
+	async function resolve(ip,dtx,tpx){
+		console.log("resolve",ip,dtx,tpx)
+		await $.get("/resolveHost/"+ip)
+		.done(function(data){
+			console.log("resolve",ip,data,data.name);
+			rep=data.name;
+			// ) ? data.name : '';
+		})
+		// .then(function
+	}
+
+	console.log("tt resolve 192.168.72.2",resolve("192.168.72.2"));
+	
 	let host = new DataTable('#hostsTable',{
 		lengthMenu: [
 			[20, 60, 90, -1],
 			[20, 60, 90, 'All']
-		]
+		],
+		columnDefs: [{
+            render: (data, type, row) => data + ' (' + resolve(row[1],data,type) + ')',
+            targets: 1
+        }]
 	});
 	let badhost = new DataTable('#badHostsTable',{
 		lengthMenu: [

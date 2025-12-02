@@ -156,6 +156,33 @@ app.get('/hosts',authenticateSession('manageHosts'), async function(req, res){
 		}
 	});
 });
+app.get('/resolveHost/:ipaddr',authenticateSession('read'), function(req,res){
+	console.log("\n/resolveHost/:ipaddr requested for",req.params.ipaddr);
+	fs.readFile(conf.hostsPing, 'utf8', (err, data) => {
+		if (err) {
+			console.log(err);
+			res.send({result: "KO 01",msg:err});
+		}else{
+			// console.log("hostsPing file  readed",data);
+			let righe=data.split(/\r?\n|\r!\ns/g);
+			let find=false;
+			righe.forEach(function(l,i){
+				console.log("hostsPing line",i,l);
+				if(l.startsWith(req.params.ipaddr) && ! find ){
+					console.log("yes",req.params.ipaddr,l.split(" ")[1])
+					find=true;
+					res.send({result: "OK",name: l.split(" ")[1]});
+				}else{
+					console.log("no",req.params.ipaddr,l.split(" ")[1])
+				}
+			})
+			if(! find){
+				console.log("not found",req.params.ipaddr);
+				res.send({result: "OK",name: ''});
+			}
+		}
+	});
+});
 app.get('/',authenticateSession("read"), async function(req, res){
 	console.log("hosts list requested");
 	const dataSpan = await pool.query("select min(times) as min,max(times) as max from events")
