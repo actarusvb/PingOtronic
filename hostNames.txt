@@ -15,9 +15,6 @@
 172.28.177.122 -n=PV402-BigBra
 172.28.100.122 -n=PV360-ML-Alba-Masera
 
-
-
-
 # some example
 # localhost
 192.168.72.2 -n=Piossasco
