@@ -1,6 +1,8 @@
 # project Specific config file
 db.js
 conf.json
+hostNames.txt
+hostsPing.txt
 
 # local notes
 NOTES.txt
