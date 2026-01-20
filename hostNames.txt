@@ -1,26 +1,5 @@
 # pingOtronic host file
 # 
-# each host target must be here
-# syntax
-# empty line are ignored
-# this is a comment
-  # this is a comment too
-# flags
-# -s ping size, don't exceed all path mtu
-# -c comment, one single word no spaces
-# -n name, as above, one single word no spaces
-# .. -c & -n are just for you, they are actually ignored 
-#
-# ARNEG
-172.28.177.122 -n=PV402-BigBra
-172.28.100.122 -n=PV360-ML-Alba-Masera
-
-# some example
-# localhost
-192.168.72.2 -n=Piossasco
-192.168.72.243 -n=PV246-RT-04
-192.168.72.253 -n=PV246-PIOSSASCO
-172.21.1.99 -n=radius
 
 127.0.0.1 -s=1350 -c=locale -n=host_locale
 8.8.8.8 -s=1400 -d=Google
