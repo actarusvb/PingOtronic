@@ -142,3 +142,4 @@ dist
 
 *.gz
 hostNames.txt
+hostsPing.txt
